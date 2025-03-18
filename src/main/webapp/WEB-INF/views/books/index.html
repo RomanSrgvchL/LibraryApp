@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Список всех книг</title>
+</head>
+<body>
+
+<div th:each="book : ${books}">
+    <a style="color: blue; text-decoration: none;"
+       th:href="@{/books/{id}(id=${book.getBookId()})}"
+       th:text="${book.getTitle()}"></a>
+</div>
+
+<hr/>
+
+<a href="/books/add">
+    <button>Добавить книгу</button>
+</a>
+
+<br/><br/>
+
+<a href="/people">
+    <button>Посмотреть список людей</button>
+</a>
+
+</body>
+</html>
