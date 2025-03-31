@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Список всех людей</title>
+</head>
+<body>
+
+<div th:each="person : ${people}">
+    <a style="color: blue; text-decoration: none;"
+       th:href="@{/people/{id}(id=${person.getPersonId()})}"
+       th:text="${person.getFullName()}"></a>
+</div>
+
+<hr/>
+
+<a href="/people/add">
+    <button>Добавить пользователя</button>
+</a>
+
+<br/><br/>
+
+<a href="/books">
+    <button>Посмотреть список книг</button>
+</a>
+
+</body>
+</html>

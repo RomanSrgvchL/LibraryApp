@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Страница книги</title>
+</head>
+<body>
+
+<p th:text="'Название книги: ' + ${book.getTitle()}"></p>
+<p th:text="'Автор: ' + ${book.getAuthor()}"></p>
+<p th:text="'Год выпуска: ' + ${book.getReleaseYear()}"></p>
+<p th:text="'id: ' + ${book.getBookId()}"></p>
+
+<div th:if="${book.getPersonId() == 0}">
+    <hr/>
+    <p>Эта книга свободна. Кому хотите выдать?</p>
+    <form th:method="patch" th:action="@{/books/{id}/assign(id=${book.getBookId()})}">
+        <label for="owner">Выберите человека:</label>
+        <select name="owner" id="owner">
+            <option th:each="person : ${people}" th:value="${person.getPersonId()}"
+                    th:text="${person.getFullName()}"></option>
+        </select>
+        <button>Выдать книгу</button>
+    </form>
+</div>
+
+<div th:unless="${book.getPersonId() == 0}">
+    <hr/>
+    <p>Книге сейчас занята.</p>
+    <p th:text="'Текущий читатель: ' + ${person.getFullName()}"></p>
+    <form th:method="patch" th:action="@{/books/{id}/return(id=${book.getBookId()})}">
+        <button>Освободить книгу</button>
+    </form>
+</div>
+
+<hr/>
+
+<a th:href="@{/books/{id}/edit(id=${book.getBookId()})}">
+    <button>Редактировать</button>
+</a>
+
+<br/><br/>
+
+<form th:method="delete" th:action="@{/books/{id}(id=${book.getBookId()})}">
+    <button>Удалить</button>
+</form>
+
+</body>
+</html>

@@ -1,0 +1,4 @@
+/.idea/
+/target/
+/src/main/resources/database/database.properties
+/src/main/resources/database/initial_data.sql
