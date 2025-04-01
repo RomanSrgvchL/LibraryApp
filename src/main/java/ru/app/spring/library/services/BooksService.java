@@ -32,6 +32,10 @@ public class BooksService {
         return booksRepository.findById(id).orElse(null);
     }
 
+    public List<Book> findAllSortedByReleaseYear() {
+        return booksRepository.findAll(Sort.by("releaseYear"));
+    }
+
     @Nullable
     public Person getOwner(int id) {
         Book book = findById(id);

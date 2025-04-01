@@ -4,5 +4,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import ru.app.spring.library.models.Person;
 
 public interface PeopleRepository extends JpaRepository<Person, Integer> {
-    public Person findByFullName(String fullName);
+    Person findByFullName(String fullName);
 }
