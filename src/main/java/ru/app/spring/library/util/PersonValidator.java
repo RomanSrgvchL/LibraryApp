@@ -3,15 +3,15 @@ package ru.app.spring.library.util;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
-import ru.app.spring.library.dao.PersonDAO;
 import ru.app.spring.library.models.Person;
+import ru.app.spring.library.services.PeopleService;
 
 @Component
 public class PersonValidator implements Validator {
-    private final PersonDAO personDAO;
+    private final PeopleService peopleService;
 
-    public PersonValidator(PersonDAO personDAO) {
-        this.personDAO = personDAO;
+    public PersonValidator(PeopleService peopleService) {
+        this.peopleService = peopleService;
     }
 
     @Override
@@ -24,7 +24,7 @@ public class PersonValidator implements Validator {
         Person person = (Person) target;
 
         // Уникальность ФИО
-        Person sameFullNamePerson = personDAO.show(person.getFullName());
+        Person sameFullNamePerson = peopleService.findByFullName(person.getFullName());
         if (sameFullNamePerson != null && sameFullNamePerson.getPersonId() != person.getPersonId()) {
             errors.rejectValue("fullName", "",
                     "Человек с таким ФИО уже существует");
