@@ -9,6 +9,10 @@ import ru.app.spring.library.models.Book;
 import ru.app.spring.library.services.BooksService;
 import ru.app.spring.library.services.PeopleService;
 
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+
 @Controller
 @RequestMapping("/books")
 public class BooksController {
@@ -21,12 +25,24 @@ public class BooksController {
     }
 
     @GetMapping
-    public String index(Model model, @RequestParam(value = "sort_by_year", defaultValue = "false") boolean sortByYear) {
-        if (sortByYear) {
-            model.addAttribute("books", booksService.findAllSortedByReleaseYear());
+    public String index(Model model, @RequestParam(value = "page", defaultValue = "-1") int page,
+                        @RequestParam(value = "books_per_page", defaultValue = "-1") int booksPerPage,
+                        @RequestParam(value = "sort_by_year", defaultValue = "false") boolean sortByYear) {
+        List<Book> books;
+
+        if (page >= 0 && booksPerPage > 0) {
+            books = new ArrayList<>(booksService.findPage(page, booksPerPage));
+            if (sortByYear) {
+                books.sort(Comparator.comparingInt(Book::getReleaseYear));
+            }
         } else {
-            model.addAttribute("books", booksService.findAll());
+            if (sortByYear) {
+                books = booksService.findAllSortedByReleaseYear();
+            } else {
+                books = booksService.findAll();
+            }
         }
+        model.addAttribute("books", books);
         return "books/index";
     }
 

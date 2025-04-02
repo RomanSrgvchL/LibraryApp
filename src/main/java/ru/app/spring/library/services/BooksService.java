@@ -1,5 +1,6 @@
 package ru.app.spring.library.services;
 
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
@@ -34,6 +35,10 @@ public class BooksService {
 
     public List<Book> findAllSortedByReleaseYear() {
         return booksRepository.findAll(Sort.by("releaseYear"));
+    }
+
+    public List<Book> findPage(int page, int booksPerPage) {
+        return booksRepository.findAll(PageRequest.of(page, booksPerPage)).getContent();
     }
 
     @Nullable
