@@ -14,7 +14,7 @@
 
 <hr/>
 
-<a th:href="@{/books(page=${param.page[0] ?: 1}, books_per_page=${param.books_per_page}, sort_by_year=true)}">
+<a th:href="@{/books(page=${param.page}, books_per_page=${param.books_per_page}, sort_by_year=true)}">
     <button>Отсортировать по году</button>
 </a>
 

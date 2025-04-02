@@ -12,6 +12,7 @@ import ru.app.spring.library.services.PeopleService;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 
 @Controller
 @RequestMapping("/books")
@@ -100,5 +101,20 @@ public class BooksController {
     public String returnBook(@PathVariable("id") int bookId) {
         booksService.returnBook(bookId);
         return "redirect:/books";
+    }
+
+    @GetMapping("/search")
+    public String search(Model model, @RequestParam(value = "title", required = false) String title) {
+        boolean searchOn = false;
+        if (title != null && !title.isEmpty()) {
+            searchOn = true;
+            Book book = booksService.findByTitle(title);
+            model.addAttribute("book", book);
+            if (book != null) {
+                model.addAttribute("person", book.getOwner());
+            }
+        }
+        model.addAttribute("searchOn", searchOn);
+        return "books/search";
     }
 }

@@ -42,6 +42,16 @@ public class BooksService {
     }
 
     @Nullable
+    public Book findByTitle(String title) {
+        List<Book> books = booksRepository.findByTitleStartingWith(title);
+        if (!books.isEmpty()) {
+            return books.getFirst();
+        } else {
+            return null;
+        }
+    }
+
+    @Nullable
     public Person getOwner(int id) {
         Book book = findById(id);
         return Objects.requireNonNull(book).getOwner();
