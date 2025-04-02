@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Range;
 
+import java.time.ZonedDateTime;
+
 @Entity
 @Table(name = "book")
 @Getter
@@ -35,6 +37,12 @@ public class Book {
     @Range(min = 1500, max = 2025)
     @Column(name =  "release_year")
     private int releaseYear;
+
+    @Column(name = "checkout_date")
+    private ZonedDateTime checkoutDate;
+
+    @Transient
+    private boolean isOverdueCheckoutDate;
 
     @Override
     public String toString() {

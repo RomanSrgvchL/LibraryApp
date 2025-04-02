@@ -5,19 +5,25 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import ru.app.spring.library.models.Book;
 import ru.app.spring.library.models.Person;
+import ru.app.spring.library.services.BooksService;
 import ru.app.spring.library.services.PeopleService;
 import ru.app.spring.library.util.PersonValidator;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/people")
 public class PeopleController {
     private final PeopleService peopleService;
     private final PersonValidator personValidator;
+    private final BooksService booksService;
 
-    public PeopleController(PeopleService peopleService, PersonValidator personValidator) {
+    public PeopleController(PeopleService peopleService, PersonValidator personValidator, BooksService booksService) {
         this.peopleService = peopleService;
         this.personValidator = personValidator;
+        this.booksService = booksService;
     }
 
     @GetMapping
@@ -29,7 +35,9 @@ public class PeopleController {
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model model) {
         model.addAttribute("person", peopleService.findById(id));
-        model.addAttribute("books", peopleService.getBooks(id));
+        List<Book> books = peopleService.getBooks(id);
+        booksService.updateOverdueCheckoutDate(books);
+        model.addAttribute("books", books);
         return "people/show";
     }
 

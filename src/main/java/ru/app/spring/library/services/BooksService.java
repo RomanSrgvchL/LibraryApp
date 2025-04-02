@@ -10,6 +10,7 @@ import ru.app.spring.library.models.Person;
 import ru.app.spring.library.repositories.BooksRepository;
 import ru.app.spring.library.repositories.PeopleRepository;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -79,11 +80,20 @@ public class BooksService {
         Person person = peopleRepository.findById(personId).orElse(null);
         Book book = booksRepository.findById(bookId).orElse(null);
         Objects.requireNonNull(book).setOwner(person);
+        book.setCheckoutDate(ZonedDateTime.now());
     }
 
     @Transactional
     public void returnBook(int bookId) {
         Book book = booksRepository.findById(bookId).orElse(null);
         Objects.requireNonNull(book).setOwner(null);
+    }
+
+    public void updateOverdueCheckoutDate(List<Book> books) {
+        for (Book book : books) {
+            if (book.getCheckoutDate().plusDays(10).isBefore(ZonedDateTime.now())) {
+                book.setOverdueCheckoutDate(true);
+            }
+        }
     }
 }
