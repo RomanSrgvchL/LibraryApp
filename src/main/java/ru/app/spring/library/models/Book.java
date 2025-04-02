@@ -38,6 +38,7 @@ public class Book {
     @Column(name =  "release_year")
     private int releaseYear;
 
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "checkout_date")
     private ZonedDateTime checkoutDate;
 

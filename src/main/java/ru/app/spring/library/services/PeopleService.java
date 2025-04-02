@@ -35,7 +35,7 @@ public class PeopleService {
 
     @Nullable
     public Person findByFullName(String fullName) {
-        return peopleRepository.findByFullName(fullName);
+        return peopleRepository.findByFullName(fullName).orElse(null);
     }
 
     public List<Book> getBooks(int id) {
