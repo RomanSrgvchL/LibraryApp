@@ -11,7 +11,7 @@
 <p th:text="'Год выпуска: ' + ${book.getReleaseYear()}"></p>
 <p th:text="'id: ' + ${book.getBookId()}"></p>
 
-<div th:if="${book.getPersonId() == 0}">
+<div th:if="${book.getOwner() == null}">
     <hr/>
     <p>Эта книга свободна. Кому хотите выдать?</p>
     <form th:method="patch" th:action="@{/books/{id}/assign(id=${book.getBookId()})}">
@@ -24,7 +24,7 @@
     </form>
 </div>
 
-<div th:unless="${book.getPersonId() == 0}">
+<div th:unless="${book.getOwner() == null}">
     <hr/>
     <p>Книге сейчас занята.</p>
     <p th:text="'Текущий читатель: ' + ${person.getFullName()}"></p>

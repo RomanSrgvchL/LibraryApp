@@ -1,0 +1,8 @@
+# Data Source
+driver_class=org.postgresql.Driver
+hibernate.connection.url=
+hibernate.connection.username=
+hibernate.connection.password=
+
+# Hibernate
+hibernate.show_sql=true

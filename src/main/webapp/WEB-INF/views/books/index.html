@@ -9,10 +9,16 @@
 <div th:each="book : ${books}">
     <a style="color: blue; text-decoration: none;"
        th:href="@{/books/{id}(id=${book.getBookId()})}"
-       th:text="${book.getTitle()}"></a>
+       th:text="${book.getTitle() + ', ' + book.getReleaseYear()}"></a>
 </div>
 
 <hr/>
+
+<a th:href="@{/books(page=${param.page}, books_per_page=${param.books_per_page}, sort_by_year=true)}">
+    <button>Отсортировать по году</button>
+</a>
+
+<br/><br/>
 
 <a href="/books/add">
     <button>Добавить книгу</button>
