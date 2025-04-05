@@ -1,4 +1,5 @@
 /.idea/
 /target/
 /src/main/resources/database/hibernate.properties
-/src/main/resources/database/initial_data.sql
+/src/main/resources/initial_data.sql
+/HELP.md
